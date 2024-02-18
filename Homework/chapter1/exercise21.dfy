@@ -30,7 +30,7 @@ lemma DatatypeCheck()
 // New syntax:  a function method is just like any other function, except it
 // can be used in an "imperative" context (i.e., inside a method)
 
-function TreeAsSequence(tree:Tree) : seq<int>
+ghost function TreeAsSequence(tree:Tree) : seq<int>
 {
 /*{*/   
     if tree == Nil then []
@@ -50,7 +50,7 @@ predicate SequencesOrderedAtInterface(seq1:seq<int>, seq2:seq<int>)
   else Last(seq1) <= seq2[0]
 }
 
-predicate IsSortedTree(tree:Tree) {
+ghost predicate IsSortedTree(tree:Tree) {
 /*{*/
     if tree == Nil then true
     else && IsSortedTree(tree.left)
@@ -71,8 +71,7 @@ datatype TreeSortedness = Unsorted | Empty | Bounded(low: int, high: int)
 // on the children to confirm that both children stay on their
 // respective sides of the pivot.
 method CheckIfSortedTree(tree:Tree) returns (out: TreeSortedness)
-    ensures IsSortedTree(tree) ==> !out.Unsorted?
-    ensures IsSortedTree(tree) <== !out.Unsorted?
+    ensures IsSortedTree(tree) <==> !out.Unsorted?
   /*{*/
     ensures if out.Bounded? then IsSortedTree(tree) else true
     ensures if out.Bounded? then |TreeAsSequence(tree)| > 0 else true
@@ -125,4 +124,3 @@ method CheckIfSortedTree(tree:Tree) returns (out: TreeSortedness)
   // Implement this method. Feel free to make this a recursive method.
   /*}*/
 }
-
