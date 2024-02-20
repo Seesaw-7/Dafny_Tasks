@@ -1,5 +1,6 @@
 include "lec6_library_cards.dfy"
 
+// forall qualifiers are faster than (non)existential qualifiers
 ghost predicate HasAtMostOneBook(v:Variables, name:string) {
   forall book1, book2 |
     && book1 in v
@@ -20,7 +21,7 @@ lemma SafetyProof()
     forall name ensures HasAtMostOneBook(v', name){
       if exists book, patron :: CheckIn(v,v',book,patron) {
         var book, patron :| CheckIn(v,v',book,patron);
-        if name == patron {
+        if name == patron { //bisection debugging (split into conditions and look at which one could not be proved)
           assert HasAtMostOneBook(v', name);
         } else {
           assert HasAtMostOneBook(v, name);//trigger (the fact that dafny was missing to complete the proof)

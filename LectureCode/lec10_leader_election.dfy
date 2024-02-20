@@ -51,7 +51,6 @@ ghost predicate SendMessage(c:Constants, v:Variables, v':Variables, idx:nat){
 datatype Step =
   | SendMessageStep(idx:nat)
 
-
 ghost predicate NextStep(c:Constants, v:Variables, v':Variables, step:Step){
   match step
   case SendMessageStep(idx) => SendMessage(c,v,v',idx)
@@ -70,5 +69,4 @@ ghost predicate Safety(c:Constants, v:Variables){
     && IsLeader(i, v, c)
     && IsLeader(i, v, c)
     :: i == j
-
 }
