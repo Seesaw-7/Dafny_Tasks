@@ -52,7 +52,8 @@ ghost predicate Init(c:Constants, v:Variables) {
   && v.WellFormed(c)
 /*{*/
   && v.server == true
-  && forall x:bool | x in v.clients :: x == false
+  // && forall x:bool | x in v.clients :: x == false
+  && forall i:nat | c.ValidIndex(i) :: v.clients[i] == false
 /*}*/
 }
 

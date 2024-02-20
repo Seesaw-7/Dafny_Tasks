@@ -92,4 +92,3 @@ lemma NonTrivialRestock()
     assert NextStep(c, v, v', RestockStep(3));
     assert Inv(c, v) && Next(c, v, v') && v.numCokes < v'.numCokes;
 }
-
