@@ -19,14 +19,14 @@ ghost predicate CheckIn(v : Variables, v' : Variables, book: Book, name: string)
   && v' == v[book:= Shelf]
 }
 
-datatype Step = 
+datatype Step =
   | CheckOutStep(book:Book, patron:string)
   | CheckInStep(book:Book, patron:string)
 
 ghost predicate NextStep(v:Variables, v':Variables, step:Step) {
   match step
-    case CheckOutStep(book, patron) => CheckOut(v, v', book, patron)
-    case CheckInStep(book, patron) => CheckIn(v, v', book, patron)
+  case CheckOutStep(book, patron) => CheckOut(v, v', book, patron)
+  case CheckInStep(book, patron) => CheckIn(v, v', book, patron)
 }
 
 ghost predicate Next(v:Variables, v':Variables){
